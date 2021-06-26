@@ -1,25 +1,29 @@
-<?php namespace Foostart\Company\Models;
+<?php
+
+namespace Foostart\Company\Models;
 
 use Foostart\Category\Library\Models\FooModel;
 use Illuminate\Database\Eloquent\Model;
 use Foostart\Comment\Models\Comment;
 
-class Company extends FooModel {
+class Company extends FooModel
+{
 
     /**
      * @table categories
      * @param array $attributes
      */
     public $user = NULL;
-    public function __construct(array $attributes = array()) {
+    public function __construct(array $attributes = array())
+    {
         //set configurations
         $this->setConfigs();
 
         parent::__construct($attributes);
-
     }
 
-    public function setConfigs() {
+    public function setConfigs()
+    {
 
         //table name
         $this->table = 'company';
@@ -28,7 +32,7 @@ class Company extends FooModel {
         $this->fillable = [
             'company_name',
             'company_slug',
-            'category_id',
+            // 'category_id',
             'slideshow_id',
             'user_id',
             'user_full_name',
@@ -50,10 +54,10 @@ class Company extends FooModel {
                 'name' => 'company_slug',
                 'type' => 'Text',
             ],
-            'category_id' => [
-                'name' => 'category_id',
-                'type' => 'Int',
-            ],
+            // 'category_id' => [
+            //     'name' => 'category_id',
+            //     'type' => 'Array',
+            // ],
             'slideshow_id' => [
                 'name' => 'slideshow_id',
                 'type' => 'Int',
@@ -97,7 +101,7 @@ class Company extends FooModel {
             'company_name',
             'company_slug',
             'user_id',
-            'category_id',
+            // 'category_id',
             'slideshow_id',
             'user_full_name',
             'updated_at',
@@ -122,7 +126,7 @@ class Company extends FooModel {
             '_id',
             'limit',
             'company_id!',
-            'category_id',
+            // 'category_id',
             'user_id',
         ];
 
@@ -134,7 +138,6 @@ class Company extends FooModel {
 
         //item status
         $this->field_status = 'company_status';
-
     }
 
     /**
@@ -142,7 +145,8 @@ class Company extends FooModel {
      * @param type $params
      * @return object list of categories
      */
-    public function selectItems($params = array()) {
+    public function selectItems($params = array())
+    {
 
         //join to another tables
         $elo = $this->joinTable();
@@ -171,13 +175,14 @@ class Company extends FooModel {
      * @param ARRAY $params list of parameters
      * @return OBJECT company
      */
-    public function selectItem($params = array(), $key = NULL) {
+    public function selectItem($params = array(), $key = NULL)
+    {
 
 
         if (empty($key)) {
             $key = $this->primaryKey;
         }
-       //join to another tables
+        //join to another tables
         $elo = $this->joinTable();
 
         //search filters
@@ -196,7 +201,8 @@ class Company extends FooModel {
     }
 
 
-    public function getComments($company_id) {
+    public function getComments($company_id)
+    {
 
         // Get company
         $params = array(
@@ -227,7 +233,8 @@ class Company extends FooModel {
      * @param ARRAY $params list of parameters
      * @return ELOQUENT OBJECT
      */
-    protected function joinTable(array $params = []){
+    protected function joinTable(array $params = [])
+    {
         return $this;
     }
 
@@ -236,17 +243,14 @@ class Company extends FooModel {
      * @param ARRAY $params list of parameters
      * @return ELOQUENT OBJECT
      */
-    protected function searchFilters(array $params = [], $elo, $by_status = TRUE){
+    protected function searchFilters(array $params = [], $elo, $by_status = TRUE)
+    {
 
         //filter
-        if ($this->isValidFilters($params) && (!empty($params)))
-        {
-            foreach($params as $column => $value)
-            {
-                if($this->isValidValue($value))
-                {
-                    switch($column)
-                    {
+        if ($this->isValidFilters($params) && (!empty($params))) {
+            foreach ($params as $column => $value) {
+                if ($this->isValidValue($value)) {
+                    switch ($column) {
                         case 'category_id':
                             if (!empty($value)) {
                                 $elo = $elo->where($this->table . '.category_id', '=', $value);
@@ -275,15 +279,15 @@ class Company extends FooModel {
                             break;
                         case 'status':
                             if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.'.$this->field_status, '=', $value);
+                                $elo = $elo->where($this->table . '.' . $this->field_status, '=', $value);
                             }
                             break;
                         case 'keyword':
                             if (!empty($value)) {
-                                $elo = $elo->where(function($elo) use ($value) {
+                                $elo = $elo->where(function ($elo) use ($value) {
                                     $elo->where($this->table . '.company_name', 'LIKE', "%{$value}%")
-                                    ->orWhere($this->table . '.company_description','LIKE', "%{$value}%")
-                                    ->orWhere($this->table . '.company_overview','LIKE', "%{$value}%");
+                                        ->orWhere($this->table . '.company_description', 'LIKE', "%{$value}%")
+                                        ->orWhere($this->table . '.company_overview', 'LIKE', "%{$value}%");
                                 });
                             }
                             break;
@@ -294,8 +298,7 @@ class Company extends FooModel {
             }
         } elseif ($by_status) {
 
-            $elo = $elo->where($this->table . '.'.$this->field_status, '=', $this->status['publish']);
-
+            $elo = $elo->where($this->table . '.' . $this->field_status, '=', $this->status['publish']);
         }
 
         return $elo;
@@ -306,11 +309,13 @@ class Company extends FooModel {
      * @param ELOQUENT OBJECT
      * @return ELOQUENT OBJECT
      */
-    public function createSelect($elo) {
+    public function createSelect($elo)
+    {
 
-        $elo = $elo->select($this->table . '.*',
-                            $this->table . '.company_id as id'
-                );
+        $elo = $elo->select(
+            $this->table . '.*',
+            $this->table . '.company_id as id'
+        );
 
         return $elo;
     }
@@ -320,7 +325,8 @@ class Company extends FooModel {
      * @param ARRAY $params list of parameters
      * @return ELOQUENT OBJECT
      */
-    public function paginateItems(array $params = [], $elo) {
+    public function paginateItems(array $params = [], $elo)
+    {
         $items = $elo->paginate($this->perPage);
 
         return $items;
@@ -332,7 +338,8 @@ class Company extends FooModel {
      * @param INT $id is primary key
      * @return type
      */
-    public function updateItem($params = [], $id = NULL) {
+    public function updateItem($params = [], $id = NULL)
+    {
 
         if (empty($id)) {
             $id = $params['id'];
@@ -343,9 +350,19 @@ class Company extends FooModel {
         $_params = [
             'id' => $id,
         ];
+
         $company = $this->selectItem($_params);
 
+        $category_id = "category_id";
+
         if (!empty($company)) {
+
+            $category_id = "category_id";
+            if (!empty($params[$category_id])) {
+                $company->$category_id()->detach();
+                $company->$category_id()->attach($params[$category_id]);
+            }
+
             $dataFields = $this->getDataFields($params, $this->fields);
 
             foreach ($dataFields as $key => $value) {
@@ -360,20 +377,27 @@ class Company extends FooModel {
         }
     }
 
+    // public function category_id()
+    // {
+    // 	return $this->hasMany('Foostart\Category\Models\Category','category_id','category_id');
+    // }
 
     /**
      *
      * @param ARRAY $params list of parameters
      * @return OBJECT company
      */
-    public function insertItem($params = []) {
+    public function insertItem($params = [])
+    {
+
 
         $dataFields = $this->getDataFields($params, $this->fields);
 
         $dataFields[$this->field_status] = $this->status['publish'];
 
-
         $item = self::create($dataFields);
+
+        !isset($params["category_id"]) ?: $item->category_id()->attach($params["category_id"]);
 
         $key = $this->primaryKey;
         $item->id = $item->$key;
@@ -381,15 +405,32 @@ class Company extends FooModel {
         return $item;
     }
 
+    public function getArray($params, $key)
+    {
+        $value = NULL;
+
+        if (isset($params[$key])) {
+            $value = $params[$key];
+        }
+
+        return $value;
+    }
+
+    public function category_id()
+    {
+        return $this->belongsToMany('Foostart\Category\Models\Category', 'company_category', 'company_id', "category_id");
+    }
 
     /**
      *
      * @param ARRAY $input list of parameters
      * @return boolean TRUE incase delete successfully otherwise return FALSE
      */
-    public function deleteItem($input = [], $delete_type) {
+    public function deleteItem($input = [], $delete_type)
+    {
 
         $item = $this->find($input['id']);
+        $category_id = "category_id";
 
         if ($item) {
             switch ($delete_type) {
@@ -397,17 +438,17 @@ class Company extends FooModel {
                     return $item->fdelete($item);
                     break;
                 case 'delete-forever':
+                    $item->$category_id()->detach();
                     return $item->delete();
                     break;
             }
-
         }
 
-        return FALSE;
+        return false;
     }
 
-    public function getCoursesByCategoriesRoot($categories) {
-
+    public function getCoursesByCategoriesRoot($categories)
+    {
         $this->is_pagination = false;
 
         if (!empty($categories)) {
@@ -432,25 +473,27 @@ class Company extends FooModel {
                 $_temp = $categories->childs[$key];
                 $_temp->courses = $this->getCouresByCategoryIds($ids);
             }
-
-
         }
         return $categories;
     }
 
-    public function getCouresByCategoryIds($ids) {
+    public function getCouresByCategoryIds($ids)
+    {
+
         $courses = self::whereIn('category_id', $ids)
-                    ->paginate($this->perPage);
+            ->paginate($this->perPage);
         return $courses;
     }
 
 
-    public function getItemsByCategories($categories) {
+    public function getItemsByCategories($categories)
+    {
 
         $items = [];
         $ids = [];
 
-        foreach ($categories as $category ) {
+
+        foreach ($categories as $category) {
             $ids += [$category->category_id => 1];
 
             if (!empty($category->category_id_child_str)) {
@@ -463,5 +506,4 @@ class Company extends FooModel {
 
         return $items;
     }
-
-    }
+}

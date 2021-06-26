@@ -51,7 +51,21 @@ $href = empty($href) ? '' : $href;
     <!--element-->
     {!! Form::label($name, $label) !!}
     @if ($items)
-        {!! Form::select($name, $items, $value, ['class' => 'form-control', 'placeholder' => $placehover]) !!}
+        
+        <ul class="list-group" style="height: 150px;overflow-y: scroll;border: 1px solid #ddd;border-radius: 4px;">
+            {{-- {!! Form::checkbox("name", "items", true,['placeholder' => $placehover,'class' => 'form-control']) !!} --}}
+            @foreach ($items as $key => $item)
+
+                <label style="display: flex;justify-items: center;margin-bottom:0;">
+                    <li class="list-group-item" style="display: flex;justify-items: center;border: none;width:100%;">
+                        {!! Form::checkbox($name.'[]', $key, false, ['placeholder' => $placehover, 'style' => 'margin-right: 1rem;']) !!}
+                        {{ $item }}
+                    </li>
+                </label>
+
+            @endforeach
+        </ul>
+        {{-- {!! Form::select($name, $items, $value, ['class' => 'form-control', 'placeholder' => $placehover]) !!} --}}
     @endif
 
     <!--description-->

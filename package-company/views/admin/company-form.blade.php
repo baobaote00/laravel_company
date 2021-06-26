@@ -73,11 +73,10 @@
         'errors' => $errors,
         ])
         <!--/POST NAME-->
-
         <div class="row">
             <div class='col-md-6'>
                 <!-- LIST OF CATEGORIES -->
-                @include('package-category::admin.partials.select_single', [
+                @include('package-category::admin.partials.select_multy', [
                 'name' => 'category_id',
                 'label' => trans($plang_admin.'.labels.category'),
                 'items' => $categories,
