@@ -13,7 +13,7 @@ class User extends CartaUser
     protected $fillable = ["email", "password", "permissions", "activated", "activation_code", "activated_at", "last_login", "protected", "banned"];
 
     protected $guarded = ["id"];
-
+    
     /**
      * Validates the user and throws
      * Exception if fails.

@@ -15,6 +15,7 @@ return [
             'permissions' => 'Permissions',
             'operations' => 'Operations',
             'contexts'  => 'Contexts',
+            'companies'  => 'companies',
         ],
 
 

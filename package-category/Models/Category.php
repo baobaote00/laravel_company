@@ -138,7 +138,7 @@ class Category extends FooModel
 
     public function companies()
     {
-        return $this->belongsToMany('Foostart\Company\Models\Company', 'company_category', 'company_id', "category_id");
+        return $this->belongsToMany('Foostart\Company\Models\Company', 'company_category', 'category_id', "company_id");
     }
 
     /**

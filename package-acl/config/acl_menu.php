@@ -10,6 +10,7 @@ $permissions = [
         'delete' => '_category-delete',
         'add' => '_category-add',
         'external' => '_external',
+
     ]
 ];
 
@@ -25,15 +26,15 @@ return [
     "list" => [
 
 
-            //Dashboard page
-            [
-                "name"        => "acl-admin.menu.dashboard",
-                "route"       => "dashboard",
-                "link"        => '/admin/users/dashboard',
-                "permissions" => []
-            ],
+        //Dashboard page
+        [
+            "name"        => "acl-admin.menu.dashboard",
+            "route"       => "dashboard",
+            "link"        => '/admin/users/dashboard',
+            "permissions" => []
+        ],
 
-            /*
+        /*
             |-----------------------------------------------------------------------
             | Admin permissions
             |-----------------------------------------------------------------------
@@ -45,47 +46,56 @@ return [
             */
 
 
-            //Users page
-            [
-                "name"        => "acl-admin.menu.users",
-                "route"       => "users",
-                "link"        => '/admin/users/list',
-                "permissions" => [$admin, '_user-editor', '_user-leader'],
-                "skip_permissions" => ["users.selfprofile.edit", "users.profile.edit", "users.profile.addfield", "users.profile.deletefield"]
-            ],
+        //Users page
+        [
+            "name"        => "acl-admin.menu.users",
+            "route"       => "users",
+            "link"        => '/admin/users/list',
+            "permissions" => [$admin, '_user-editor', '_user-leader'],
+            "skip_permissions" => ["users.selfprofile.edit", "users.profile.edit", "users.profile.addfield", "users.profile.deletefield"]
+        ],
 
 
-            //Groups page
-            [
-                "name"        => "acl-admin.menu.groups",
-                "route"       => "groups",
-                "link"        => '/admin/groups/list',
-                "permissions" => [$admin, "_group-editor"]
-            ],
+        //Groups page
+        [
+            "name"        => "acl-admin.menu.groups",
+            "route"       => "groups",
+            "link"        => '/admin/groups/list',
+            "permissions" => [$admin, "_group-editor"]
+        ],
 
 
-            //Permissions page
-            [
-                "name"        => "acl-admin.menu.permissions",
-                "route"       => "permissions",
-                "link"        => '/admin/permissions/list',
-                "permissions" => [$admin, "_permission-editor"]
-            ],
+        //Permissions page
+        [
+            "name"        => "acl-admin.menu.permissions",
+            "route"       => "permissions",
+            "link"        => '/admin/permissions/list',
+            "permissions" => [$admin, "_permission-editor"]
+        ],
 
-            //Contexts
-            [
+        //Contexts
+        [
 
-                'name'        => 'category-admin.menus.top-menu-contexts',
-                "route"       => "contexts",
-                "link"        => '/admin/contexts/list',
-                "permissions" => [$admin]
-            ],
+            'name'        => 'category-admin.menus.top-menu-contexts',
+            "route"       => "contexts",
+            "link"        => '/admin/contexts/list',
+            "permissions" => [$admin]
+        ],
 
-            //Categories
-            [
-                "route"       => "category-admin.menus.top-menu",
-                "link"        => '/admin/categories/list',
-                "permissions" => [$admin, '_user-editor']
-            ],
+        //companies
+        [
+
+            'name'        => 'acl-admin.menu.companies',
+            "route"       => "companies",
+            "link"        => '/admin/company',
+            "permissions" => [$admin]
+        ],
+
+        //Categories
+        [
+            "route"       => "category-admin.menus.top-menu",
+            "link"        => '/admin/categories/list',
+            "permissions" => [$admin, '_user-editor']
+        ],
     ]
 ];

@@ -12,7 +12,7 @@ namespace Foostart\Company\Controllers\Admin;
 |
 */
 
-
+use Foostart\Acl\Authentication\Models\User;
 use Illuminate\Http\Request;
 use URL, Route, Redirect;
 use Illuminate\Support\Facades\App;
@@ -36,7 +36,6 @@ class CompanyAdminController extends FooController
 
     public function __construct(Request $request)
     {
-
         parent::__construct();
 
         //models
@@ -71,6 +70,7 @@ class CompanyAdminController extends FooController
         //get status item
         $this->data_view['status'] = $this->obj_item->getPluckStatus();
 
+
         //set category context
         $this->category_ref_name = 'admin/company';
 
@@ -82,10 +82,15 @@ class CompanyAdminController extends FooController
             ];
             $this->categories = $this->obj_category->pluckSelect($_params);
         }
+
+        // $user = new User();
+        // $_params = [
+        //     'context_id' => $this->context->context_id
+        // ];
+        // $user->pluckSelect();
         $this->data_view['categories'] = $this->categories;
         $this->data_view['context'] = $this->context;
         $this->data_view['slideshow'] = $this->obj_slideshow->pluckSelect();
-
 
         /**
          * Breadcrumb
@@ -111,7 +116,10 @@ class CompanyAdminController extends FooController
          * Params
          */
         $params = $request->all();
+
         $user = $this->getUser();
+
+        // dd($user);
 
         /**
          * Get current user and ignore admin
@@ -155,6 +163,7 @@ class CompanyAdminController extends FooController
          */
         $this->breadcrumb_3['label'] = 'Edit';
 
+        $checked = [];
         $item = NULL;
 
         /**
@@ -179,9 +188,28 @@ class CompanyAdminController extends FooController
 
             $item = $this->obj_item->selectItem($params, FALSE);
 
+            $category = $item->category_id()->get();
+
+            if (!empty($category)) {
+                foreach ($category as $value) {
+                    $checked[$value['category_id']] = $value['category_name'];
+                }
+            }
+
+            // dd($checked,$this->data_view['categories']);
+
             if (empty($item)) {
                 return Redirect::route($this->root_router . '.list')
                     ->withMessage(trans($this->plang_admin . '.actions.edit-error'));
+            }
+        }
+
+        // dd(User::get());
+        $trainers = [];
+        $allUser = User::get();
+        for ($i = 0; $i < count($allUser); $i++) {
+            if ($allUser[$i]->hasPermission(["_trainer"])) {
+                $trainers[$allUser[$i]["id"]] = $allUser[$i]["email"];
             }
         }
 
@@ -192,6 +220,8 @@ class CompanyAdminController extends FooController
             'breadcrumb_1' => $this->breadcrumb_1,
             'breadcrumb_2' => $this->breadcrumb_2,
             'breadcrumb_3' => $this->breadcrumb_3,
+            'trainers' => $trainers,
+            'category' => $checked,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
@@ -221,6 +251,8 @@ class CompanyAdminController extends FooController
                 $item = $this->obj_item->find($id);
 
                 if (!empty($item)) {
+
+                    // dd($params);
 
                     $item = $this->obj_item->updateItem($params, $id);
 

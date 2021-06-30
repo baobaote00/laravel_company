@@ -28,7 +28,6 @@
                         @endif
                     </div>
                     <!--/DESCRIPTION-->
-
                     <!--MESSAGE-->
                     <?php $message = Session::get('message'); ?>
                     @if (isset($message))
@@ -45,6 +44,7 @@
                         @endforeach
                     @endif
                     <!--/ERRORS-->
+
 
                     <!--BODY-->
                     <div class="panel-body">

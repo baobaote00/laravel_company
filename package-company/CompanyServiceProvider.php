@@ -80,7 +80,6 @@ class CompanyServiceProvider extends ServiceProvider {
      * @destination: resources/views/vendor/package-company
      */
     protected function publishViews() {
-
         $this->publishes([
             __DIR__ . '/Views' => base_path('resources/views/vendor/package-company'),
         ]);
@@ -95,9 +94,7 @@ class CompanyServiceProvider extends ServiceProvider {
     protected function publishMigrations()
     {
 
-        $this->publishes([
-                                 __DIR__ . '/database/migrations' => $this->app->databasePath() . '/migrations',
-                         ]);
+        $this->publishes([__DIR__ . '/database/migrations' => $this->app->databasePath() . '/migrations',]);
     }
 
 }

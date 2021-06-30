@@ -145,6 +145,7 @@ return [
         'name' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
         'slug' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
         'category' => 'Click <a href=":href">here</a> to manage list of categories by token.',
+        'trainer' => 'Click <a href=":href">here</a> to manage list of trainer by token.',
         'slideshow' => 'Click <a href=":href">here</a> to manage list of slideshow',
         'overview' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
         'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
@@ -194,7 +195,8 @@ return [
         'description' => 'Company Description',
         'overview' => 'Company Overview',
         'slug' => 'Slug',
-        'updated_at' => 'Updated at'
+        'updated_at' => 'Updated at',
+        'status' => 'Status'
     ],
 
 
@@ -217,6 +219,7 @@ return [
         'image' => 'Company image',
         'files' => 'Company files',
         'category' => 'Category name',
+        'trainer' => 'Trainer',
         'slideshow' => 'Slideshow name',
         'title-search' => 'Search company',
         'title-backup' => 'Backups',

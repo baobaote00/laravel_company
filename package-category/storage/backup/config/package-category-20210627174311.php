@@ -3,20 +3,24 @@ return [
 
     //Number of worlds
     'length' => [
-        'company_name' => [
+        'category_name' => [
+            'min' => 3,
+            'max' => 255,
+        ],
+        'category_overview' => [
             'min' => 10,
             'max' => 255,
         ],
-        'company_overview' => [
-            'min' => 10,
-            'max' => 255,
-        ],
-        'company_description' => [
-            'min' => 255,
+        'category_description' => [
+            'min' => 25,
             'max' => 0,//unlimit
         ],
     ],
-    'per_page' => 1,
+
+    'name_context_min_length' => 5,
+    'name_context_max_length' => 255,
+
+    'per_page' => 15,
 
     /*
     |-----------------------------------------------------------------------
@@ -27,9 +31,18 @@ return [
     |
     */
     'env' => 0,
-    'load_from' => 'package-company::',
+    'load_from' => 'package-category::',
 
-    'company_status' => [
+    /*
+      |--------------------------------------------------------------------------
+      | ITEM STATUS
+      |--------------------------------------------------------------------------
+      | @public = 99
+      | @in_trash = 55 delete from list
+      | @draft = 11 auto save
+      | @unpublish = 33
+     */
+    'status' => [
         'publish' => 99,
         'unpublish' => 33,
         'intrash' => 55,
@@ -49,18 +62,8 @@ return [
         ]
     ],
 
-    /*
-    |-----------------------------------------------------------------------
-    | LANGUAGES
-    |-----------------------------------------------------------------------
-    | vi
-    | en
-    |
-    */
-    'langs' => [
-        'en' => 'English',
-        'vi' => 'Vietnam'
-    ],
+
+
 
 
     /*
@@ -79,5 +82,41 @@ return [
         'edit' => ['_superadmin', '_user-editor'],
         'add' => ['_superadmin', '_user-editor'],
         'delete' => ['_superadmin', '_user-editor'],
-    ]
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | LANGUAGES
+    |-----------------------------------------------------------------------
+    | vi
+    | en
+    |
+    */
+    'langs' => [
+        'en' => 'English',
+        'vi' => 'Vietnam'
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | CATEGORY ID
+    |-----------------------------------------------------------------------
+    |
+    |
+    |
+    |
+    */
+    'category' => [
+        'id_1' => 1, //QC category
+        'id_2' => 7, //PG category
+    ],
+
 ];

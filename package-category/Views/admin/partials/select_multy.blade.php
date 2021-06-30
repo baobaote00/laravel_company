@@ -26,6 +26,8 @@ $name = empty($name) ? 'undefined' : $name;
 //items
 $items = empty($items) ? [] : $items;
 
+$checked = empty($checked) ? [] : $checked;
+
 //value
 $value = empty($value) ? $request->get($name) : $value;
 // dd($value);
@@ -51,21 +53,38 @@ $href = empty($href) ? '' : $href;
     <!--element-->
     {!! Form::label($name, $label) !!}
     @if ($items)
-        
+
         <ul class="list-group" style="height: 150px;overflow-y: scroll;border: 1px solid #ddd;border-radius: 4px;">
-            {{-- {!! Form::checkbox("name", "items", true,['placeholder' => $placehover,'class' => 'form-control']) !!} --}}
+
+            @if ($checked)
+                @foreach ($checked as $key => $item)
+
+                    <label style="display: flex;justify-items: center;margin-bottom:0;">
+                        <li class="list-group-item"
+                            style="display: flex;justify-items: center;border: none;width:100%;">
+                            {!! Form::checkbox($name . '[]', $key, true, ['placeholder' => $placehover, 'style' => 'margin-right: 1rem;']) !!}
+                            {{ $item }}
+                        </li>
+                    </label>
+
+                @endforeach
+            @endif
+
             @foreach ($items as $key => $item)
+                @if ($checked)
+                    <?php if (array_key_exists($key, $checked)) continue; ?>
+                @endif
 
                 <label style="display: flex;justify-items: center;margin-bottom:0;">
                     <li class="list-group-item" style="display: flex;justify-items: center;border: none;width:100%;">
-                        {!! Form::checkbox($name.'[]', $key, false, ['placeholder' => $placehover, 'style' => 'margin-right: 1rem;']) !!}
+                        {!! Form::checkbox($name . '[]', $key, false, ['placeholder' => $placehover, 'style' => 'margin-right: 1rem;']) !!}
                         {{ $item }}
                     </li>
                 </label>
 
             @endforeach
+
         </ul>
-        {{-- {!! Form::select($name, $items, $value, ['class' => 'form-control', 'placeholder' => $placehover]) !!} --}}
     @endif
 
     <!--description-->

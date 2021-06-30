@@ -1,3 +1,4 @@
+
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i>
@@ -22,7 +23,6 @@
                 'label' => trans($plang_admin.'.labels.keyword'),
                 'value' => @$params['keyword'],
             ])
-
             <!-- STATUS -->
             @include('package-category::admin.partials.select_single', [
                 'name' => 'status',

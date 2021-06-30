@@ -1,7 +1,6 @@
 <!------------------------------------------------------------------------------
 | List of elements in company form
 |------------------------------------------------------------------------------->
-
 {!! Form::open(['route' => ['company.company', 'id' => @$item->id], 'files' => true, 'method' => 'company']) !!}
 
 <!--BUTTONS-->
@@ -74,20 +73,23 @@
         ])
         <!--/POST NAME-->
         <div class="row">
+
             <div class='col-md-6'>
                 <!-- LIST OF CATEGORIES -->
                 @include('package-category::admin.partials.select_multy', [
                 'name' => 'category_id',
                 'label' => trans($plang_admin.'.labels.category'),
                 'items' => $categories,
+                'checked' => $category,
                 'value' => @$item->category_id,
                 'description' => trans($plang_admin.'.descriptions.category', [
-                'href' => !$context??URL::route('categories.list', ['_key' => $context->context_key])
+                'href' => URL::route('categories.list', ['_key' => $context->context_key])
                 ]),
                 'errors' => $errors,
                 ])
 
             </div>
+
 
             <div class='col-md-6'>
 
@@ -105,10 +107,11 @@
 
             </div>
 
+
             <div class='col-md-6'>
                 <!--STATUS-->
                 @include('package-category::admin.partials.select_single', [
-                'name' => 'status',
+                'name' => 'company_status',
                 'label' => trans($plang_admin.'.form.status'),
                 'value' => @$item->company_status,
                 'items' => $status,
@@ -117,6 +120,15 @@
             </div>
 
         </div>
+        <!-- LIST OF TRAINER -->
+        @include('package-category::admin.partials.select_multy', [
+        'name' => 'trainer',
+        'label' => trans($plang_admin.'.labels.trainer'),
+        'items' => $trainers,
+        'value' => @$item->trainers,
+        'description' => trans($plang_admin.'.descriptions.trainer'),
+        'errors' => $errors,
+        ])
 
         <!--POST DESCRIPTION-->
         @include('package-category::admin.partials.textarea', [

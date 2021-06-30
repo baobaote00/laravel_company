@@ -401,6 +401,7 @@ class FooModel extends Model {
      */
     public function getPluckStatus() {
        $pluck_status = [];
+
        if ($this->config_status && $this->config_status['list']) {
            $pluck_status = $this->config_status['list'];
        }

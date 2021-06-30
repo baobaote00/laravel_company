@@ -20,6 +20,7 @@ class CreatePermissionTable extends Migration {
             $table->string('description');
             $table->string('url', 255);
             $table->string('permission');
+            $table->integer('category_id')->nullable();	
             $table->boolean('protected')->default(0);
             $table->timestamps();
         });

@@ -1,7 +1,7 @@
 @extends('package-acl::admin.layouts.base-2cols')
 
 @section('title')
-    {{ trans($plang_admin.'.pages.title-config') }}
+    {{ trans($plang_admin . '.pages.title-config') }}
 @stop
 
 @section('content')
@@ -17,26 +17,26 @@
                     <!--HEADING-->
                     <div class="panel-heading">
                         <h3 class="panel-title bariol-thin"><i class="fa fa-braille" aria-hidden="true"></i>
-                            {!! trans($plang_admin.'.pages.title-config') !!}
+                            {!! trans($plang_admin . '.pages.title-config') !!}
                         </h3>
                     </div>
 
                     <!--DESCRIPTION-->
                     <div class='panel-info panel-description'>
-                        {!! trans($plang_admin.'.descriptions.config') !!}</h4>
+                        {!! trans($plang_admin . '.descriptions.config') !!}</h4>
                     </div>
                     <!--/DESCRIPTION-->
 
                     <!--MESSAGE-->
                     <?php $message = Session::get('message'); ?>
-                    @if( isset($message) )
+                    @if (isset($message))
                         <div class="panel-info alert alert-success flash-message">{!! $message !!}</div>
                     @endif
                     <!--/MESSAGE-->
 
                     <!--ERRORS-->
-                    @if($errors && ! $errors->isEmpty() )
-                        @foreach($errors->all() as $error)
+                    @if ($errors && !$errors->isEmpty())
+                        @foreach ($errors->all() as $error)
 
                             <div class="alert alert-danger flash-message">{!! $error !!}</div>
 
@@ -46,20 +46,20 @@
 
                     <!--BODY-->
                     <div class="panel-body">
-                        {!! Form::open(['route'=>['company.config'], 'method' => 'company'])  !!}
+                        {!! Form::open(['route' => ['company.config'], 'method' => 'company']) !!}
 
-                            <div class='btn-form'>
+                        <div class='btn-form'>
 
-                                <!-- SAVE BUTTON -->
-                                {!! Form::submit(trans($plang_admin.'.buttons.save'), array("class"=>"btn btn-info pull-right ")) !!}
-                                <!-- /SAVE BUTTON -->
+                            <!-- SAVE BUTTON -->
+                            {!! Form::submit(trans($plang_admin . '.buttons.save'), ['class' => 'btn btn-info pull-right ']) !!}
+                            <!-- /SAVE BUTTON -->
 
-                            </div>
+                        </div>
 
-                            {!! Form::label('content', trans($plang_admin.'.labels.config')) !!}
-                            {!! Form::textarea('content', $content, ['class' => 'form-control textarea-margin', 'size' => '30x50']) !!}
+                        {!! Form::label('content', trans($plang_admin . '.labels.config')) !!}
+                        {!! Form::textarea('content', $content, ['class' => 'form-control textarea-margin', 'size' => '30x50']) !!}
 
-                            {!! Form::close() !!}
+                        {!! Form::close() !!}
                     </div>
                     <!--/BODY-->
 

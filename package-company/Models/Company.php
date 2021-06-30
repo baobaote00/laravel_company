@@ -2,7 +2,9 @@
 
 namespace Foostart\Company\Models;
 
+use Foostart\Acl\Authentication\Models\User;
 use Foostart\Category\Library\Models\FooModel;
+use Foostart\Category\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Foostart\Comment\Models\Comment;
 
@@ -91,7 +93,7 @@ class Company extends FooModel
                 'type' => 'Json',
             ],
             'company_status' => [
-                'name' => 'status',
+                'name' => 'company_status',
                 'type' => 'Int',
             ],
         ];
@@ -177,16 +179,16 @@ class Company extends FooModel
      */
     public function selectItem($params = array(), $key = NULL)
     {
-
-
         if (empty($key)) {
             $key = $this->primaryKey;
         }
+
         //join to another tables
         $elo = $this->joinTable();
 
         //search filters
         $elo = $this->searchFilters($params, $elo, FALSE);
+
 
         //select fields
         $elo = $this->createSelect($elo);
@@ -228,6 +230,8 @@ class Company extends FooModel
         return $users_comments;
     }
 
+
+
     /**
      *
      * @param ARRAY $params list of parameters
@@ -245,20 +249,25 @@ class Company extends FooModel
      */
     protected function searchFilters(array $params = [], $elo, $by_status = TRUE)
     {
-
         //filter
         if ($this->isValidFilters($params) && (!empty($params))) {
+
             foreach ($params as $column => $value) {
+
+                // dd($elo);
+                // dd($this->category_id()->get());
+                // dd($elo->where($this->table . '.category_id', '=', $params['category']));
+
                 if ($this->isValidValue($value)) {
                     switch ($column) {
                         case 'category_id':
                             if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.category_id', '=', $value);
+                                $elo = Category::find($params['category'])->companies();
                             }
                             break;
                         case 'category':
                             if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.category_id', '=', $value);
+                                $elo = Category::find($params['category'])->companies();
                             }
                             break;
                         case 'user_id':
@@ -298,7 +307,7 @@ class Company extends FooModel
             }
         } elseif ($by_status) {
 
-            $elo = $elo->where($this->table . '.' . $this->field_status, '=', $this->status['publish']);
+            $elo = $elo->where($this->table . '.' . $this->field_status, '=', $this->config_status['publish']);
         }
 
         return $elo;
@@ -311,6 +320,15 @@ class Company extends FooModel
      */
     public function createSelect($elo)
     {
+
+        // for ($i = 0; $i < count($elo); $i++) {
+        //     $elo[$i] = $elo[$i]->select(
+        //         $this->table . '.*',
+        //         $this->table . '.company_id as id'
+        //     );
+        // }
+
+        // dd($elo);
 
         $elo = $elo->select(
             $this->table . '.*',
@@ -353,13 +371,19 @@ class Company extends FooModel
 
         $company = $this->selectItem($_params);
 
+        $trainer = new Trainer();
+
+        // dd($params['trainer']);
+        dd($trainer->selectItems($params['trainer']), 1);
+
         $category_id = "category_id";
 
         if (!empty($company)) {
 
             $category_id = "category_id";
+            $company->$category_id()->detach();
+
             if (!empty($params[$category_id])) {
-                $company->$category_id()->detach();
                 $company->$category_id()->attach($params[$category_id]);
             }
 
@@ -377,11 +401,6 @@ class Company extends FooModel
         }
     }
 
-    // public function category_id()
-    // {
-    // 	return $this->hasMany('Foostart\Category\Models\Category','category_id','category_id');
-    // }
-
     /**
      *
      * @param ARRAY $params list of parameters
@@ -390,14 +409,30 @@ class Company extends FooModel
     public function insertItem($params = [])
     {
 
-
         $dataFields = $this->getDataFields($params, $this->fields);
 
-        $dataFields[$this->field_status] = $this->status['publish'];
+        $dataFields[$this->field_status] = $this->config_status['publish'];
+
+        $trainer = new Trainer();
+
+        $trainers = User::find($params['trainer']);
 
         $item = self::create($dataFields);
 
         !isset($params["category_id"]) ?: $item->category_id()->attach($params["category_id"]);
+
+
+        if (count($trainer->selectItems($params['trainer']))) {
+            foreach ($trainers as $key => $value) {
+                $_params = [
+                    "user_id" => $value['id'],
+                    "company_id" => $item['company_id'],
+                ];
+                $trainer->insertItem($_params);
+            }
+        }
+
+        dd($trainer->selectItems($params['trainer']), 1);
 
         $key = $this->primaryKey;
         $item->id = $item->$key;
@@ -418,7 +453,12 @@ class Company extends FooModel
 
     public function category_id()
     {
-        return $this->belongsToMany('Foostart\Category\Models\Category', 'company_category', 'company_id', "category_id");
+        return $this->belongsToMany('Foostart\Category\Models\Category', 'company_category', 'category_id', "company_id");
+    }
+
+    public function trainer()
+    {
+        return $this->belongsTo(Trainer::class, 'company_id', 'company_id');
     }
 
     /**
