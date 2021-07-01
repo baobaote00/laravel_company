@@ -86,15 +86,15 @@
                     </span>
 
                     {!! Form::submit(trans($plang_admin . '.buttons.delete-in-trash'), [
-    'class' => 'btn btn-danger pull-right delete btn-delete-all del-trash',
-    'title' => trans($plang_admin . '.hint.delete-in-trash'),
-    'name' => 'del-trash',
-]) !!}
+                        'class' => 'btn btn-danger pull-right delete btn-delete-all del-trash',
+                        'title' => trans($plang_admin . '.hint.delete-in-trash'),
+                        'name' => 'del-trash',
+                    ]) !!}
                     {!! Form::submit(trans($plang_admin . '.buttons.delete-forever'), [
-    'class' => 'btn btn-warning pull-right delete btn-delete-all del-forever',
-    'title' => trans($plang_admin . '.hint.delete-forever'),
-    'name' => 'del-forever',
-]) !!}
+                        'class' => 'btn btn-warning pull-right delete btn-delete-all del-forever',
+                        'title' => trans($plang_admin . '.hint.delete-forever'),
+                        'name' => 'del-forever',
+                    ]) !!}
                 </th>
                 </th>
 

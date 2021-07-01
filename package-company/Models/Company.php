@@ -374,8 +374,6 @@ class Company extends FooModel
         $trainer = new Trainer();
 
         // dd($params['trainer']);
-        dd($trainer->selectItems($params['trainer']), 1);
-
         $category_id = "category_id";
 
         if (!empty($company)) {

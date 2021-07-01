@@ -18,7 +18,7 @@ class CompanyServiceProvider extends ServiceProvider {
     public function boot(Request $request) {
 
         //generate context key
-//        $this->generateContextKey();
+    //    $this->generateContextKey();
 
         // load view
         $this->loadViewsFrom(__DIR__ . '/Views', 'package-company');

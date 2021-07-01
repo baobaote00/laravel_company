@@ -12,3 +12,5 @@
 {!! HTML::style('packages/foostart/css/baselayout.css') !!}
 
 {!! HTML::style('packages/foostart/css/fonts.css') !!}
+
+{!! HTML::style('packages/baobaote00/css/style.css') !!}

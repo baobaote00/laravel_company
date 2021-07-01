@@ -108,7 +108,11 @@ class Trainer extends FooModel
      */
     protected function joinTable(array $params = [])
     {
-        return $this;
+        $elo = $this;
+
+        $elo = $elo->join('users', 'trainer.user_id', '=', 'users.id');
+
+        return $elo;
     }
     /**
      *
@@ -191,6 +195,8 @@ class Trainer extends FooModel
     {
 
         $dataFields = $this->getDataFields($params, $this->fields);
+
+        dd($dataFields);
 
         $dataFields[$this->field_status] = $this->config_status['publish'];
 

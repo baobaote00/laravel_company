@@ -119,8 +119,6 @@ class CompanyAdminController extends FooController
 
         $user = $this->getUser();
 
-        // dd($user);
-
         /**
          * Get current user and ignore admin
          */
@@ -204,15 +202,6 @@ class CompanyAdminController extends FooController
             }
         }
 
-        // dd(User::get());
-        $trainers = [];
-        $allUser = User::get();
-        for ($i = 0; $i < count($allUser); $i++) {
-            if ($allUser[$i]->hasPermission(["_trainer"])) {
-                $trainers[$allUser[$i]["id"]] = $allUser[$i]["email"];
-            }
-        }
-
         // display view
         $this->data_view = array_merge($this->data_view, array(
             'item' => $item,
@@ -220,7 +209,6 @@ class CompanyAdminController extends FooController
             'breadcrumb_1' => $this->breadcrumb_1,
             'breadcrumb_2' => $this->breadcrumb_2,
             'breadcrumb_3' => $this->breadcrumb_3,
-            'trainers' => $trainers,
             'category' => $checked,
         ));
         return view($this->page_views['admin']['edit'], $this->data_view);

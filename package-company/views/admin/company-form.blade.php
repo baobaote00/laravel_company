@@ -120,15 +120,6 @@
             </div>
 
         </div>
-        <!-- LIST OF TRAINER -->
-        @include('package-category::admin.partials.select_multy', [
-        'name' => 'trainer',
-        'label' => trans($plang_admin.'.labels.trainer'),
-        'items' => $trainers,
-        'value' => @$item->trainers,
-        'description' => trans($plang_admin.'.descriptions.trainer'),
-        'errors' => $errors,
-        ])
 
         <!--POST DESCRIPTION-->
         @include('package-category::admin.partials.textarea', [
