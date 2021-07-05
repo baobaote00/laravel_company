@@ -371,9 +371,6 @@ class Company extends FooModel
 
         $company = $this->selectItem($_params);
 
-        $trainer = new Trainer();
-
-        // dd($params['trainer']);
         $category_id = "category_id";
 
         if (!empty($company)) {
@@ -411,26 +408,9 @@ class Company extends FooModel
 
         $dataFields[$this->field_status] = $this->config_status['publish'];
 
-        $trainer = new Trainer();
-
-        $trainers = User::find($params['trainer']);
-
         $item = self::create($dataFields);
 
         !isset($params["category_id"]) ?: $item->category_id()->attach($params["category_id"]);
-
-
-        if (count($trainer->selectItems($params['trainer']))) {
-            foreach ($trainers as $key => $value) {
-                $_params = [
-                    "user_id" => $value['id'],
-                    "company_id" => $item['company_id'],
-                ];
-                $trainer->insertItem($_params);
-            }
-        }
-
-        dd($trainer->selectItems($params['trainer']), 1);
 
         $key = $this->primaryKey;
         $item->id = $item->$key;
